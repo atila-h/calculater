@@ -17,7 +17,7 @@ function printOnScreen(x) {
 function setNum(x) {
     if (helper) {
         screenNumber = "";
-        helper = "0";
+        helper = 0;
     }
 
     if (screenNumber === "0") {
@@ -28,7 +28,12 @@ function setNum(x) {
 }
 
 function operate(type) {
-    partA = +screenNumber;
+    if (partA) {
+        calculate()
+    }
+    else {
+        partA = +screenNumber;
+    }
     operatetype = type;
     helper = 1;
 
@@ -37,9 +42,29 @@ function operate(type) {
 
 function calculate() {
     partB = +screenNumber;
+    
+    let result;
+
     if (operatetype === "+") {
 
         result = partA + partB;
     }
-    screen.innerHTML = result;
+    else if (operatetype === "-") {
+
+        result = partA - partB;
+    }
+
+    else if (operatetype === "*") {
+
+        result = partA * partB;
+    }
+    else {
+        result = partA / partB;
+    }
+    helper= 1;
+    screen.innerHTML = (+result).toLocaleString();
+
+    partA = result;
+
+    screenNumber = result.toString();
 }
